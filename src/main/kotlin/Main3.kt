@@ -2,22 +2,16 @@ fun main() {
     println("Introdueix un nombre per comptar-ne els dígits:")
     val n = readln().toLongOrNull() ?: 0L
 
-    val digits = comptaDigits(n)
+    val digits = comptaDigitsRecursiu(n)
     println("El nombre $n té $digits dígit(s)")
 }
 
-fun comptaDigits(n: Long): Int {
-    // Cas especial: el 0 té 1 dígit
+fun comptaDigitsRecursiu(n: Long): Int {
+    // Casos base
     if (n == 0L) return 1
+    if (n > -10 && n < 10) return 1  // -9 .. 9 → 1 dígit
 
-    // Convertim a positiu per si és negatiu
-    var valor = if (n < 0) -n else n
-    var comptador = 0
-
-    while (valor > 0) {
-        valor /= 10          // eliminem l'últim dígit
-        comptador++          // comptem un dígit més
-    }
-
-    return comptador
+    // Cas recursiu
+    val valorAbsolut = if (n < 0) -n else n
+    return 1 + comptaDigitsRecursiu(valorAbsolut / 10)
 }
